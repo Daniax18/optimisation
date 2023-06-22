@@ -22,6 +22,11 @@ public class Fraction {
         if(this.value() > 0) return true;
         return false;
     }
+    
+    public boolean  isNegative(){
+        if(this.value() < 0) return true;
+        return false;
+    }
        
     /**
      * Get the max index from a list of fractions
@@ -57,7 +62,7 @@ public class Fraction {
      */
     public static Fraction divide(Fraction fr1, Fraction fr2) throws Exception{
          try {
-             if(fr1.num == 0 || fr2.num == 0) return new Fraction(0);
+            if(fr1.num == 0 || fr2.num == 0) return new Fraction(0);
             return new Fraction((fr1.num * fr2.den), fr1.den * fr2.num);
         } catch (Exception e) {
             throw new Exception("Error on dividing :"+ e.getMessage());
@@ -116,6 +121,19 @@ public class Fraction {
         int gcd = Fraction.pgcd(num, den);
         num = num / gcd;
         den = den / gcd;
+        if(num < 0 && den < 0){
+            num *= -1;
+            den *= -1;
+        }
+        if(den == -1){
+            num *= -1;
+            den = 1;
+        }
+        
+        if(den < 0 && num > 0){
+            num *= -1;
+            den *= -1;
+        }
     }
     
     
@@ -162,8 +180,8 @@ public class Fraction {
     
     @Override
     public String toString(){       
-        if(this.den == 1) return "("+ this.num +")";
-        return "("+num+"/"+den+")";
+        if(this.den == 1) return String.valueOf(this.num);
+        return num+"/"+den;
     }
     
 }
